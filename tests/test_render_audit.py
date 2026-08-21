@@ -115,9 +115,7 @@ def test_render_rejects_exam_that_does_not_match_source(
         render_exam(example_exam, source_path=source, output_path=tmp_path / "result.hwpx")
 
 
-def test_audit_rejects_reordered_choices(
-    example_exam, example_path: Path, tmp_path: Path
-) -> None:
+def test_audit_rejects_reordered_choices(example_exam, example_path: Path, tmp_path: Path) -> None:
     output = tmp_path / "result.hwpx"
     render_exam(example_exam, source_path=example_path, output_path=output)
     first, second = example_exam.questions[0].choices[:2]

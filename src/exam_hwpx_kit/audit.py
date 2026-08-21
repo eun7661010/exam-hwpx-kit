@@ -165,11 +165,15 @@ def audit_hwpx(
                     for image_id in question.image_ids
                 ]
                 media = {item.item_id: item.href for item in doc.media.images}
+                actual_hashes: list[str] = []
                 with zipfile.ZipFile(output_path) as archive:
-                    actual_hashes = [
-                        hashlib.sha256(archive.read(media[ref.binary_item_id_ref])).hexdigest()
-                        for ref in doc.media.picture_references()
-                    ]
+                    for reference in doc.media.picture_references():
+                        item_id = reference.binary_item_id_ref
+                        if item_id is None:
+                            raise KeyError("picture reference has no binary item ID")
+                        actual_hashes.append(
+                            hashlib.sha256(archive.read(media[item_id])).hexdigest()
+                        )
                 checks.append(
                     AuditCheck(
                         name="image-content",
