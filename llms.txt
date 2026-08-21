@@ -12,7 +12,7 @@ CLI: exam-hwpx
 - You need to convert structured exam JSON into an A4 one- or two-column HWPX file.
 - You need Korean question layout with passages, numbered questions, 2-5 choices, <보기> boxes, points, and PNG/JPEG images.
 - You need to reject duplicate question numbers, broken passage references, unsafe asset paths, missing images, choice-marker mistakes, or XML-forbidden control characters before generation.
-- You need to audit that a generated HWPX retained the expected text, image count, package integrity, shared-resource IDs, and column declaration.
+- You need to audit exact normalized text order, source image hashes, package integrity, shared-resource IDs, and the one- or two-column declaration in a generated HWPX.
 - You need JSON output and exit codes for CI or an AI-agent tool workflow.
 - You need a renderer-independent PNG visual-regression comparison step after exporting HWPX pages with a trusted office renderer.
 
@@ -49,6 +49,8 @@ generation, audit, or visual comparison failed.
 Input validation and HWPX structural audit are deterministic and local. The tool
 does not claim that a document opened or rendered correctly in Hancom Office.
 Pixel-level checking requires externally rasterized PNG pages and visual-check.
+The audit detects missing, duplicated, reordered, or added plain text and replaced
+image payloads; it does not infer visual layout from XML alone.
 
 ## Privacy
 

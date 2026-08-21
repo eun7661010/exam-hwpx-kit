@@ -20,7 +20,8 @@ ExamPaper model
         HWPX auditor
  ├─ package and editor-open-safety checks
  ├─ shared-resource ID integrity
- ├─ source text and image count comparison
+ ├─ exact normalized source-text order comparison
+ ├─ source-to-package image hash comparison
  ├─ column-declaration comparison
  └─ privacy-minimized receipt
 ```
@@ -31,8 +32,10 @@ The package imports public `python-hwpx` APIs for document creation, page setup,
 paragraph formatting, tables, pictures, persistence, package validation, and ID
 integrity. It does not produce OWPML XML or copy `python-hwpx` source.
 
-The auditor reads generated section XML only to observe the declared column count.
-It does not write or mutate XML.
+The auditor reads generated section XML only to observe the declared column count
+and the image references used by the document. It does not write or mutate XML.
+Malformed or unsafe package data becomes a failed audit report instead of being
+reparsed or surfaced as an unhandled exception.
 
 ## Failure policy
 

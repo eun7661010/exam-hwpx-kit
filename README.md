@@ -51,7 +51,8 @@ OWPML XML by hand.
 - XML-forbidden control characters before any HWPX is written
 - A keep-together question that is too large for the configured column budget
 - Generated HWPX packages that fail package, editor-open-safety, or ID checks
-- Questions, choices, passage text, boxes, images, or column settings lost after generation
+- Passage, question, choice, point, or box text that is missing, duplicated, reordered, or added after generation
+- Image payloads that were omitted or replaced, and a mismatched one- or two-column declaration
 
 ## Three-minute quick start
 
@@ -155,7 +156,7 @@ The word “verified” is intentionally specific:
 
 1. **Input verified** means the JSON schema, semantic rules, paths, and assets passed.
 2. **Structure verified** means the HWPX package, editor-open-safety, shared IDs,
-   declared columns, text, and image counts passed.
+   declared columns, exact normalized text order, and source image hashes passed.
 3. **Visually compared** means PNG pages exported by a trusted external renderer
    were compared with `visual-check`.
 4. **Opened in Hancom Office** is not claimed unless you perform that check in your

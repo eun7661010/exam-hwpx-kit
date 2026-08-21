@@ -117,7 +117,7 @@ def run(argv: Sequence[str] | None = None) -> int:
         exam, code = _load_for_command(args.input, as_json=args.json)
         if exam is None:
             return code
-        audit_report = audit_hwpx(exam, args.hwpx)
+        audit_report = audit_hwpx(exam, args.hwpx, source_root=args.input.parent)
         if args.json:
             print(json.dumps(audit_report.model_dump(mode="json"), ensure_ascii=False, indent=2))
         else:

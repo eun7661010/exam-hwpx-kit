@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from hwpx import HwpxDocument
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, ValidationError
 
 from .audit import AuditReport, audit_hwpx
 from .models import ExamPaper, PassageBlock, QuestionBlock
@@ -154,19 +154,30 @@ def render_exam(
     """Validate, render, audit, and write a privacy-minimized receipt."""
 
     receipt_path = receipt_path or output_path.with_suffix(output_path.suffix + ".receipt.json")
+    if output_path.resolve() == receipt_path.resolve():
+        raise RenderError("HWPX 출력 경로와 영수증 경로는 서로 달라야 합니다.")
     if output_path.exists():
         raise RenderError(f"기존 출력 파일을 덮어쓰지 않습니다: {output_path.name}")
     if receipt_path.exists():
         raise RenderError(f"기존 영수증 파일을 덮어쓰지 않습니다: {receipt_path.name}")
 
-    validation = validate_exam(exam, root=source_path.parent)
+    try:
+        source_bytes = source_path.read_bytes()
+        source_payload = json.loads(source_bytes.decode("utf-8-sig"))
+        source_exam = ExamPaper.model_validate(source_payload)
+    except (OSError, UnicodeError, json.JSONDecodeError, ValidationError) as exc:
+        raise RenderError(f"시험 JSON을 읽을 수 없습니다: {exc}") from exc
+    if source_exam != exam:
+        raise RenderError("전달된 입력 모델이 source_path의 시험 JSON과 일치하지 않습니다.")
+
+    validation = validate_exam(source_exam, root=source_path.parent)
     if not validation.ok:
         raise RenderError("시험 JSON 검증에 실패하여 HWPX를 만들지 않았습니다.")
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    doc = build_document(exam, root=source_path.parent)
+    doc = build_document(source_exam, root=source_path.parent)
     doc.save_to_path(output_path)
-    audit = audit_hwpx(exam, output_path)
+    audit = audit_hwpx(source_exam, output_path, source_root=source_path.parent)
     if not audit.ok:
         output_path.unlink(missing_ok=True)
         raise RenderError("생성된 HWPX가 내용 무결성 감사를 통과하지 못했습니다.")
@@ -174,14 +185,14 @@ def render_exam(
     receipt = RenderReceipt(
         receipt_version="exam-hwpx-kit/receipt/v1",
         created_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        source_sha256=_sha256(source_path),
+        source_sha256=hashlib.sha256(source_bytes).hexdigest(),
         output_sha256=_sha256(output_path),
         source_name=source_path.name,
         output_name=output_path.name,
-        questions=len(exam.questions),
-        passages=len(exam.passages),
-        images=sum(len(question.image_ids) for question in exam.questions),
-        columns=exam.layout.columns,
+        questions=len(source_exam.questions),
+        passages=len(source_exam.passages),
+        images=sum(len(question.image_ids) for question in source_exam.questions),
+        columns=source_exam.layout.columns,
         validation=validation,
         audit=audit,
     )
