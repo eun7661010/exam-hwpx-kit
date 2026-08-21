@@ -7,6 +7,7 @@ import json
 import sys
 from collections.abc import Sequence
 from pathlib import Path
+from typing import Any
 
 from . import __version__
 from .audit import audit_hwpx
@@ -14,6 +15,18 @@ from .models import ExamPaper
 from .render import RenderError, create_template, render_exam
 from .validation import ValidationReport, load_and_validate
 from .visual import compare_page_directories
+
+
+def _ensure_utf8_stream(stream: Any) -> None:
+    """Use UTF-8 when a Windows shell exposes a non-Korean code page."""
+
+    encoding = getattr(stream, "encoding", None) or "utf-8"
+    try:
+        "검".encode(encoding)
+    except (LookupError, UnicodeEncodeError):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if callable(reconfigure):
+            reconfigure(encoding="utf-8", errors="backslashreplace")
 
 
 def _print_report(report: ValidationReport, *, as_json: bool) -> None:
@@ -140,6 +153,8 @@ def run(argv: Sequence[str] | None = None) -> int:
 
 
 def main() -> None:
+    _ensure_utf8_stream(sys.stdout)
+    _ensure_utf8_stream(sys.stderr)
     raise SystemExit(run())
 
 

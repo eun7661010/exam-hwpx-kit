@@ -2,7 +2,23 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from exam_hwpx_kit.cli import run
+from exam_hwpx_kit.cli import _ensure_utf8_stream, run
+
+
+class NonUtf8Stream:
+    encoding = "cp1252"
+
+    def __init__(self) -> None:
+        self.configured: tuple[str, str] | None = None
+
+    def reconfigure(self, *, encoding: str, errors: str) -> None:
+        self.configured = (encoding, errors)
+
+
+def test_non_korean_console_is_reconfigured_to_utf8() -> None:
+    stream = NonUtf8Stream()
+    _ensure_utf8_stream(stream)
+    assert stream.configured == ("utf-8", "backslashreplace")
 
 
 def test_validate_human(example_path: Path, capsys) -> None:

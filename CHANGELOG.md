@@ -17,5 +17,6 @@ while the public contract remains pre-1.0.
 - Renderer-neutral PNG visual comparison command
 - Synthetic JSON, PNG, and template-generation workflow
 - Windows, macOS, and Ubuntu CI for Python 3.10 and 3.13
+- UTF-8 CLI output fallback for Windows shells that expose a non-Korean code page
 
 [0.1.0]: https://github.com/eun7661010/exam-hwpx-kit/releases/tag/v0.1.0
