@@ -45,6 +45,7 @@ OWPML XML by hand.
 - Duplicate block IDs, question numbers, and asset IDs
 - Passage references to missing or earlier questions
 - Missing, absolute, escaping, or unsupported image paths
+- PNG/JPEG files whose content does not match the declared extension
 - Image references with no asset and assets used by no question
 - Choice text that already contains circled-number markers
 - XML-forbidden control characters before any HWPX is written
@@ -127,7 +128,7 @@ and [schema guide](docs/schema.md).
 | Command | Purpose | Exit code |
 |---|---|---:|
 | `exam-hwpx validate INPUT` | Validate schema, cross-references, paths, assets, and layout risk | `0` valid, `1` invalid |
-| `exam-hwpx render INPUT OUTPUT` | Validate, generate HWPX, audit it, and write a receipt | `0` success, `1` blocked |
+| `exam-hwpx render INPUT OUTPUT` | Validate, generate HWPX, audit it, and write a receipt without overwriting existing files | `0` success, `1` blocked |
 | `exam-hwpx audit INPUT OUTPUT` | Compare an existing HWPX with its source JSON | `0` match, `1` mismatch |
 | `exam-hwpx template OUTPUT` | Create a content-free synthetic A4 HWPX starting point | `0` success |
 | `exam-hwpx visual-check BASELINE CURRENT` | Compare trusted renderer PNG pages | `0` within threshold, `1` regression |

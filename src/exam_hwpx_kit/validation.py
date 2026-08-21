@@ -18,6 +18,16 @@ _CHOICE_MARK_RE = re.compile(r"^[①②③④⑤]\s*")
 _IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg"}
 
 
+def _has_expected_image_signature(path: Path) -> bool:
+    try:
+        header = path.read_bytes()[:12]
+    except OSError:
+        return False
+    if path.suffix.lower() == ".png":
+        return header.startswith(b"\x89PNG\r\n\x1a\n")
+    return header.startswith(b"\xff\xd8\xff")
+
+
 class Issue(BaseModel):
     model_config = ConfigDict(frozen=True)
 
@@ -185,6 +195,17 @@ def validate_exam(exam: ExamPaper, *, root: Path) -> ValidationReport:
                     "missing-asset-file",
                     f"$.assets[{index}].path",
                     f"자산 파일을 찾을 수 없습니다: {asset.path}",
+                )
+            )
+        elif candidate.suffix.lower() in _IMAGE_EXTENSIONS and not _has_expected_image_signature(
+            candidate
+        ):
+            issues.append(
+                _issue(
+                    "error",
+                    "image-signature-mismatch",
+                    f"$.assets[{index}].path",
+                    "파일 내용이 확장자에 맞는 PNG 또는 JPEG가 아닙니다.",
                 )
             )
 

@@ -3,10 +3,11 @@ from __future__ import annotations
 import zipfile
 from pathlib import Path
 
+import pytest
 from hwpx import HwpxDocument
 
 from exam_hwpx_kit.audit import audit_hwpx
-from exam_hwpx_kit.render import build_document, create_template, render_exam
+from exam_hwpx_kit.render import RenderError, build_document, create_template, render_exam
 
 
 def test_build_document_has_two_columns_and_content(example_exam, example_path: Path) -> None:
@@ -56,3 +57,21 @@ def test_template_is_synthetic_and_valid(tmp_path: Path) -> None:
         assert "mimetype" in archive.namelist()
     doc = HwpxDocument.open(output)
     assert "Synthetic Exam Template" in doc.text.plain()
+
+
+def test_render_refuses_to_overwrite_output(
+    example_exam, example_path: Path, tmp_path: Path
+) -> None:
+    output = tmp_path / "result.hwpx"
+    output.write_bytes(b"keep me")
+    with pytest.raises(RenderError, match="덮어쓰지"):
+        render_exam(example_exam, source_path=example_path, output_path=output)
+    assert output.read_bytes() == b"keep me"
+
+
+def test_template_refuses_to_overwrite(tmp_path: Path) -> None:
+    output = tmp_path / "template.hwpx"
+    output.write_bytes(b"keep me")
+    with pytest.raises(RenderError, match="덮어쓰지"):
+        create_template(output)
+    assert output.read_bytes() == b"keep me"

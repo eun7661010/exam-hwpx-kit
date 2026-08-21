@@ -43,6 +43,7 @@
 - 블록 ID, 문항 번호, 자산 ID가 중복된 경우
 - 지문이 없거나 앞에 있는 문항을 참조한 경우
 - 이미지가 없거나, 절대 경로이거나, 작업 폴더 밖으로 나가는 경우
+- PNG·JPEG 파일의 실제 내용이 확장자와 맞지 않는 경우
 - 정의하지 않은 이미지를 참조하거나 어느 문항도 쓰지 않는 자산이 있는 경우
 - 선택지 본문에 원문자 번호가 이미 들어간 경우
 - HWPX를 만들기 전에 XML에서 허용하지 않는 제어 문자를 발견한 경우
@@ -123,7 +124,7 @@ CLI를 실행하기 전에도 [합성 HWPX 결과](examples/synthetic-output.hwp
 | 명령 | 역할 | 종료 코드 |
 |---|---|---:|
 | `exam-hwpx validate INPUT` | 스키마·참조 관계·경로·자산·레이아웃 위험을 검사합니다. | 통과 `0`, 실패 `1` |
-| `exam-hwpx render INPUT OUTPUT` | 검사 후 HWPX를 만들고 결과를 감사하여 영수증을 씁니다. | 성공 `0`, 차단 `1` |
+| `exam-hwpx render INPUT OUTPUT` | 기존 파일을 덮어쓰지 않으며, 검사 후 HWPX와 영수증을 만듭니다. | 성공 `0`, 차단 `1` |
 | `exam-hwpx audit INPUT OUTPUT` | 기존 HWPX와 원본 JSON의 내용을 대조합니다. | 일치 `0`, 불일치 `1` |
 | `exam-hwpx template OUTPUT` | 내용이 없는 합성 A4 HWPX 시작 파일을 만듭니다. | 성공 `0` |
 | `exam-hwpx visual-check BASELINE CURRENT` | 외부 렌더러가 만든 PNG 페이지를 비교합니다. | 기준 이내 `0`, 회귀 `1` |

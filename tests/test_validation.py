@@ -72,6 +72,16 @@ def test_large_keep_together_question_fails(example_payload: dict, example_path:
     assert "keep-together-overflow-risk" in codes(exam, example_path.parent)
 
 
+def test_image_signature_must_match_extension(
+    example_payload: dict, example_path: Path, tmp_path: Path
+) -> None:
+    fake = tmp_path / "fake.png"
+    fake.write_text("not an image", encoding="utf-8")
+    example_payload["assets"][0]["path"] = fake.name
+    exam = ExamPaper.model_validate(example_payload)
+    assert "image-signature-mismatch" in codes(exam, tmp_path)
+
+
 def test_load_invalid_json(tmp_path: Path) -> None:
     path = tmp_path / "bad.json"
     path.write_text("{", encoding="utf-8")

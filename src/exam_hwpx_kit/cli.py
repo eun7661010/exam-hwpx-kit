@@ -114,7 +114,11 @@ def run(argv: Sequence[str] | None = None) -> int:
         return 0 if audit_report.ok else 1
 
     if args.command == "template":
-        create_template(args.output, columns=args.columns)
+        try:
+            create_template(args.output, columns=args.columns)
+        except RenderError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
         print(f"합성 템플릿 생성 완료: {args.output.name}")
         return 0
 

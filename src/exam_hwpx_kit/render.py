@@ -153,6 +153,12 @@ def render_exam(
 ) -> RenderReceipt:
     """Validate, render, audit, and write a privacy-minimized receipt."""
 
+    receipt_path = receipt_path or output_path.with_suffix(output_path.suffix + ".receipt.json")
+    if output_path.exists():
+        raise RenderError(f"기존 출력 파일을 덮어쓰지 않습니다: {output_path.name}")
+    if receipt_path.exists():
+        raise RenderError(f"기존 영수증 파일을 덮어쓰지 않습니다: {receipt_path.name}")
+
     validation = validate_exam(exam, root=source_path.parent)
     if not validation.ok:
         raise RenderError("시험 JSON 검증에 실패하여 HWPX를 만들지 않았습니다.")
@@ -179,7 +185,6 @@ def render_exam(
         validation=validation,
         audit=audit,
     )
-    receipt_path = receipt_path or output_path.with_suffix(output_path.suffix + ".receipt.json")
     receipt_path.write_text(
         json.dumps(receipt.model_dump(mode="json"), ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -190,6 +195,8 @@ def render_exam(
 def create_template(output_path: Path, *, columns: int = 2) -> None:
     """Create a synthetic, content-free A4 HWPX starting point."""
 
+    if output_path.exists():
+        raise RenderError(f"기존 출력 파일을 덮어쓰지 않습니다: {output_path.name}")
     doc = HwpxDocument.new()
     doc.page.setup(
         paper_size="A4",
