@@ -1,0 +1,26 @@
+name: Feature request
+description: Propose a focused exam-contract or integrity improvement.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: pain
+    attributes:
+      label: User pain point
+      description: What exam-to-HWPX workflow currently fails or takes manual work?
+    validations:
+      required: true
+  - type: textarea
+    id: contract
+    attributes:
+      label: Proposed public contract
+      description: Show a small synthetic JSON or CLI example.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Why this belongs here
+      description: Explain why the change is exam-specific rather than a general python-hwpx feature.
+    validations:
+      required: true

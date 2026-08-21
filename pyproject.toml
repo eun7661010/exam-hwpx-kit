@@ -1,0 +1,102 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "exam-hwpx-kit"
+version = "0.1.0"
+description = "Validate structured exam JSON, generate two-column HWPX worksheets, and audit content integrity."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "exam-hwpx-kit contributors" }]
+keywords = [
+  "HWPX",
+  "Korean exam",
+  "worksheet generator",
+  "exam JSON schema",
+  "two-column layout",
+  "document validation",
+  "python-hwpx",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Education :: Testing",
+  "Topic :: Office/Business :: Office Suites",
+]
+dependencies = [
+  "pydantic>=2.10,<3",
+  "python-hwpx>=6.2.1,<7",
+]
+
+[project.optional-dependencies]
+visual = ["Pillow>=11,<13"]
+dev = [
+  "build>=1.2",
+  "jsonschema>=4.23",
+  "mypy>=1.15",
+  "Pillow>=11,<13",
+  "pytest>=8.3",
+  "pytest-cov>=6",
+  "ruff>=0.11",
+  "twine>=6",
+]
+
+[project.scripts]
+exam-hwpx = "exam_hwpx_kit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/eun7661010/exam-hwpx-kit"
+Documentation = "https://github.com/eun7661010/exam-hwpx-kit#readme"
+Issues = "https://github.com/eun7661010/exam-hwpx-kit/issues"
+Changelog = "https://github.com/eun7661010/exam-hwpx-kit/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/exam_hwpx_kit"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src",
+  "/tests",
+  "/examples",
+  "/README.md",
+  "/README.ko.md",
+  "/LICENSE",
+  "/NOTICE",
+  "/CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --strict-config"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["exam_hwpx_kit"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["exam_hwpx_kit"]

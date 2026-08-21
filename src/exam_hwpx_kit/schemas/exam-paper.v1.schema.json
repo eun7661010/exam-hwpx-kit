@@ -1,0 +1,309 @@
+{
+  "$defs": {
+    "Asset": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_-]{1,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "alt": {
+          "maxLength": 240,
+          "minLength": 1,
+          "title": "Alt",
+          "type": "string"
+        },
+        "width_mm": {
+          "default": 55,
+          "exclusiveMinimum": 0,
+          "maximum": 90,
+          "title": "Width Mm",
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "alt"
+      ],
+      "title": "Asset",
+      "type": "object"
+    },
+    "Layout": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "default": 2,
+          "enum": [
+            1,
+            2
+          ],
+          "title": "Columns",
+          "type": "integer"
+        },
+        "column_gap_mm": {
+          "default": 6,
+          "maximum": 20,
+          "minimum": 2,
+          "title": "Column Gap Mm",
+          "type": "number"
+        },
+        "margins": {
+          "$ref": "#/$defs/PageMargins"
+        },
+        "max_lines_per_column": {
+          "default": 52,
+          "maximum": 100,
+          "minimum": 20,
+          "title": "Max Lines Per Column",
+          "type": "integer"
+        }
+      },
+      "title": "Layout",
+      "type": "object"
+    },
+    "PageMargins": {
+      "additionalProperties": false,
+      "properties": {
+        "top_mm": {
+          "default": 15,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Top Mm",
+          "type": "number"
+        },
+        "bottom_mm": {
+          "default": 15,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Bottom Mm",
+          "type": "number"
+        },
+        "left_mm": {
+          "default": 15,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Left Mm",
+          "type": "number"
+        },
+        "right_mm": {
+          "default": 15,
+          "maximum": 40,
+          "minimum": 5,
+          "title": "Right Mm",
+          "type": "number"
+        }
+      },
+      "title": "PageMargins",
+      "type": "object"
+    },
+    "PassageBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "passage",
+          "title": "Type",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_-]{1,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 20000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "question_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Question Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "label",
+        "text",
+        "question_ids"
+      ],
+      "title": "PassageBlock",
+      "type": "object"
+    },
+    "QuestionBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "question",
+          "title": "Type",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z][a-z0-9_-]{1,63}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "number": {
+          "exclusiveMinimum": 0,
+          "title": "Number",
+          "type": "integer"
+        },
+        "stem": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Stem",
+          "type": "string"
+        },
+        "choices": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 2,
+          "title": "Choices",
+          "type": "array"
+        },
+        "points": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Points"
+        },
+        "boxes": {
+          "items": {
+            "$ref": "#/$defs/SupportBox"
+          },
+          "maxItems": 4,
+          "title": "Boxes",
+          "type": "array"
+        },
+        "image_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 4,
+          "title": "Image Ids",
+          "type": "array"
+        },
+        "keep_together": {
+          "default": true,
+          "title": "Keep Together",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "number",
+        "stem",
+        "choices"
+      ],
+      "title": "QuestionBlock",
+      "type": "object"
+    },
+    "SupportBox": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "default": "<보기>",
+          "maxLength": 40,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 4000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "SupportBox",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "exam-hwpx-kit/v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "title": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "layout": {
+      "$ref": "#/$defs/Layout"
+    },
+    "assets": {
+      "items": {
+        "$ref": "#/$defs/Asset"
+      },
+      "title": "Assets",
+      "type": "array"
+    },
+    "blocks": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "passage": "#/$defs/PassageBlock",
+            "question": "#/$defs/QuestionBlock"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/PassageBlock"
+          },
+          {
+            "$ref": "#/$defs/QuestionBlock"
+          }
+        ]
+      },
+      "minItems": 1,
+      "title": "Blocks",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "title",
+    "blocks"
+  ],
+  "title": "ExamPaper",
+  "type": "object",
+  "$id": "https://github.com/eun7661010/exam-hwpx-kit/blob/v0.1.0/src/exam_hwpx_kit/schemas/exam-paper.v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
