@@ -67,14 +67,22 @@ packages = ["src/exam_hwpx_kit"]
 
 [tool.hatch.build.targets.sdist]
 include = [
+  "/.github",
   "/src",
   "/tests",
   "/examples",
+  "/docs",
+  "/tools",
   "/README.md",
   "/README.ko.md",
   "/LICENSE",
   "/NOTICE",
   "/CHANGELOG.md",
+  "/CODE_OF_CONDUCT.md",
+  "/CONTRIBUTING.md",
+  "/SECURITY.md",
+  "/llms.txt",
+  "/pyproject.toml",
 ]
 
 [tool.pytest.ini_options]
