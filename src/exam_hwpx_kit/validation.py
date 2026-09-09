@@ -264,7 +264,7 @@ def load_and_validate(path: Path) -> tuple[ExamPaper | None, ValidationReport]:
     """Load one JSON file and return a model plus a stable validation report."""
 
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, UnicodeError, json.JSONDecodeError) as exc:
         issue = _issue("error", "invalid-json", "$", f"JSON을 읽을 수 없습니다: {exc}")
         return None, ValidationReport.from_issues([issue])

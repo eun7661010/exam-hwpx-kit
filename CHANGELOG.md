@@ -17,6 +17,20 @@ while the public contract remains pre-1.0.
 
 ### Fixed
 
+- `validate` and `render` accept UTF-8 JSON files that start with a byte-order mark
+  (the default for Notepad and Windows PowerShell 5 `Out-File`); the validation entry
+  point read plain `utf-8` while `render` already decoded `utf-8-sig`
+- Empty or whitespace-only choice strings are rejected at schema level (`minLength: 1`),
+  matching every other text field; previously a blank choice rendered as a bare marker.
+  The schema version stays `exam-hwpx-kit/v1` because only inputs that already produced
+  broken documents are affected
+- `visual-check` reports a missing `[visual]` extra as a normal CLI error with exit code 1
+  instead of a Python traceback
+- Documentation: the second `audit` argument is documented as `HWPX` (an existing file to
+  audit, not a render output), the Korean README lists unsupported image formats, and
+  troubleshooting covers every validation issue code
+- Packaging: removed the license classifier that duplicated the SPDX `License-Expression`
+  (PEP 639) and made the `dev` extra reuse `[visual]` instead of repeating the Pillow pin
 - `tools/export_schema.py` now always writes LF line endings, so regenerating the
   schema on Windows no longer produces a CRLF-only diff, and the schema `$id` follows
   the package version instead of a hard-coded tag

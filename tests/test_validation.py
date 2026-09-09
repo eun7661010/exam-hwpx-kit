@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import shutil
 from pathlib import Path
 
 import pytest
@@ -97,3 +98,12 @@ def test_load_schema_failure(tmp_path: Path) -> None:
     exam, report = load_and_validate(path)
     assert exam is None
     assert any(issue.code == "schema" for issue in report.issues)
+
+
+def test_utf8_bom_json_is_accepted(example_path: Path, tmp_path: Path) -> None:
+    shutil.copytree(example_path.parent / "assets", tmp_path / "assets")
+    target = tmp_path / "bom.json"
+    target.write_bytes(b"\xef\xbb\xbf" + example_path.read_bytes())
+    exam, report = load_and_validate(target)
+    assert exam is not None
+    assert report.ok, report.issues

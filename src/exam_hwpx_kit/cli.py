@@ -177,12 +177,16 @@ def run(argv: Sequence[str] | None = None) -> int:
         return 0
 
     if args.command == "visual-check":
-        visual_report = compare_page_directories(
-            args.baseline,
-            args.current,
-            max_changed_pixel_ratio=args.max_changed_pixel_ratio,
-            pixel_delta_threshold=args.pixel_delta_threshold,
-        )
+        try:
+            visual_report = compare_page_directories(
+                args.baseline,
+                args.current,
+                max_changed_pixel_ratio=args.max_changed_pixel_ratio,
+                pixel_delta_threshold=args.pixel_delta_threshold,
+            )
+        except RuntimeError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
         if args.json:
             print(json.dumps(visual_report.model_dump(mode="json"), ensure_ascii=False, indent=2))
         else:
