@@ -1,5 +1,7 @@
 # Visual regression
 
+[한국어](visual-regression.ko.md)
+
 HWPX package validation cannot prove that two office suites will produce the same
 line breaks or page pixels. `visual-check` deliberately accepts PNG pages rather
 than pretending to be an HWPX renderer.

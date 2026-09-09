@@ -47,41 +47,82 @@ def _load_for_command(path: Path, *, as_json: bool = False) -> tuple[ExamPaper |
     return exam, 0
 
 
+_INPUT_HELP = "시험 JSON 파일 / exam JSON file"
+_OUTPUT_HELP = "만들 HWPX 파일 경로 / HWPX path to create"
+_JSON_HELP = "기계가 읽을 수 있는 JSON을 출력합니다 / print machine-readable JSON"
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="exam-hwpx",
-        description="Validate exam JSON, generate two-column HWPX, and audit the result.",
+        description=(
+            "시험 JSON을 검증하고 2단 HWPX를 만든 뒤 결과를 감사합니다. / "
+            "Validate exam JSON, generate two-column HWPX, and audit the result."
+        ),
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    validate_parser = subparsers.add_parser("validate", help="validate JSON and referenced assets")
-    validate_parser.add_argument("input", type=Path)
-    validate_parser.add_argument("--json", action="store_true", help="print machine-readable JSON")
+    validate_parser = subparsers.add_parser(
+        "validate", help="JSON과 참조 자산을 검증합니다 / validate JSON and referenced assets"
+    )
+    validate_parser.add_argument("input", type=Path, help=_INPUT_HELP)
+    validate_parser.add_argument("--json", action="store_true", help=_JSON_HELP)
 
-    render_parser = subparsers.add_parser("render", help="render validated JSON to HWPX")
-    render_parser.add_argument("input", type=Path)
-    render_parser.add_argument("output", type=Path)
-    render_parser.add_argument("--receipt", type=Path, help="write receipt to this path")
-    render_parser.add_argument("--json", action="store_true", help="print receipt as JSON")
+    render_parser = subparsers.add_parser(
+        "render", help="검증된 JSON으로 HWPX를 만듭니다 / render validated JSON to HWPX"
+    )
+    render_parser.add_argument("input", type=Path, help=_INPUT_HELP)
+    render_parser.add_argument("output", type=Path, help=_OUTPUT_HELP)
+    render_parser.add_argument(
+        "--receipt", type=Path, help="영수증을 이 경로에 씁니다 / write receipt to this path"
+    )
+    render_parser.add_argument(
+        "--json", action="store_true", help="영수증을 JSON으로 출력합니다 / print receipt as JSON"
+    )
 
-    audit_parser = subparsers.add_parser("audit", help="compare an HWPX with its source JSON")
-    audit_parser.add_argument("input", type=Path)
-    audit_parser.add_argument("hwpx", type=Path)
-    audit_parser.add_argument("--json", action="store_true")
+    audit_parser = subparsers.add_parser(
+        "audit", help="HWPX를 원본 JSON과 대조합니다 / compare an HWPX with its source JSON"
+    )
+    audit_parser.add_argument("input", type=Path, help=_INPUT_HELP)
+    audit_parser.add_argument("hwpx", type=Path, help="감사할 HWPX 파일 / HWPX file to audit")
+    audit_parser.add_argument("--json", action="store_true", help=_JSON_HELP)
 
-    template_parser = subparsers.add_parser("template", help="create a synthetic blank HWPX")
-    template_parser.add_argument("output", type=Path)
-    template_parser.add_argument("--columns", type=int, choices=(1, 2), default=2)
+    template_parser = subparsers.add_parser(
+        "template", help="내용이 없는 합성 HWPX를 만듭니다 / create a synthetic blank HWPX"
+    )
+    template_parser.add_argument("output", type=Path, help=_OUTPUT_HELP)
+    template_parser.add_argument(
+        "--columns",
+        type=int,
+        choices=(1, 2),
+        default=2,
+        help="단 수, 기본 2 / number of columns, default 2",
+    )
 
     visual_parser = subparsers.add_parser(
-        "visual-check", help="compare externally rendered PNG pages"
+        "visual-check",
+        help="외부 렌더러가 만든 PNG 쪽을 비교합니다 / compare externally rendered PNG pages",
     )
-    visual_parser.add_argument("baseline", type=Path)
-    visual_parser.add_argument("current", type=Path)
-    visual_parser.add_argument("--max-changed-pixel-ratio", type=float, default=0.001)
-    visual_parser.add_argument("--pixel-delta-threshold", type=int, default=8)
-    visual_parser.add_argument("--json", action="store_true")
+    visual_parser.add_argument(
+        "baseline", type=Path, help="기준 PNG 쪽 폴더 / directory of baseline PNG pages"
+    )
+    visual_parser.add_argument(
+        "current", type=Path, help="비교할 PNG 쪽 폴더 / directory of current PNG pages"
+    )
+    visual_parser.add_argument(
+        "--max-changed-pixel-ratio",
+        type=float,
+        default=0.001,
+        help="쪽당 허용하는 바뀐 픽셀 비율, 기본 0.001 / allowed changed-pixel ratio per page",
+    )
+    visual_parser.add_argument(
+        "--pixel-delta-threshold",
+        type=int,
+        default=8,
+        help="바뀐 픽셀로 세는 회색조 차이, 기본 8 / grayscale delta that counts as changed",
+    )
+    visual_parser.add_argument("--json", action="store_true", help=_JSON_HELP)
     return parser
 
 

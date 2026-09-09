@@ -80,6 +80,7 @@ include = [
   "/CHANGELOG.md",
   "/CODE_OF_CONDUCT.md",
   "/CONTRIBUTING.md",
+  "/CONTRIBUTING.ko.md",
   "/SECURITY.md",
   "/llms.txt",
   "/pyproject.toml",

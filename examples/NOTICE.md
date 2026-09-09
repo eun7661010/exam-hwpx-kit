@@ -11,3 +11,7 @@ Every file in this directory was created specifically for `exam-hwpx-kit`.
 
 No private template, real exam, third-party passage, logo, personal data, or
 proprietary asset was used.
+
+## 한국어 안내
+
+이 폴더의 모든 파일은 `exam-hwpx-kit`를 위해 새로 만든 합성 자료입니다. `synthetic-exam.json`은 가상의 온실 센서 시나리오이고, `assets/sensor-chart.png`는 `tools/generate_synthetic_assets.py`가 생성하며, 두 HWPX 파일은 공개 `python-hwpx` API를 거쳐 `exam-hwpx template`·`exam-hwpx render`로 만들었습니다. 비공개 템플릿, 실제 시험, 제3자 지문, 로고, 개인정보, 독점 자산은 사용하지 않았습니다.

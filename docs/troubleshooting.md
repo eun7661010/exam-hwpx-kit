@@ -1,5 +1,7 @@
 # Troubleshooting
 
+[한국어](troubleshooting.ko.md)
+
 ## `absolute-asset-path` or `asset-path-escape`
 
 Move the image below the JSON directory and use a relative path such as

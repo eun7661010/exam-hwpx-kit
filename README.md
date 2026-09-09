@@ -192,7 +192,8 @@ twine check dist/*
 
 CI runs the test and example workflow on Windows, macOS, and Ubuntu with Python
 3.10 and 3.13. See [CONTRIBUTING.md](CONTRIBUTING.md) for safe fixture and pull
-request rules.
+request rules. Korean contributors can read [CONTRIBUTING.ko.md](CONTRIBUTING.ko.md)
+and the `docs/*.ko.md` pages; issues and pull requests may be written in Korean.
 
 ## Non-goals and current limits
 

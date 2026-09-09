@@ -1,5 +1,7 @@
 # Exam JSON schema v1
 
+[한국어](schema.ko.md)
+
 The canonical machine-readable contract is
 [`exam-paper.v1.schema.json`](../src/exam_hwpx_kit/schemas/exam-paper.v1.schema.json).
 `tools/export_schema.py` regenerates it from the Pydantic model. CI regenerates the

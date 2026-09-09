@@ -3,6 +3,24 @@
 All notable changes are documented here. This project follows Semantic Versioning
 while the public contract remains pre-1.0.
 
+## [Unreleased]
+
+### Added
+
+- Korean documentation: `CONTRIBUTING.ko.md`, `docs/*.ko.md` (schema, troubleshooting,
+  visual regression, security model, architecture), Korean sections in `SECURITY.md`,
+  `CODE_OF_CONDUCT.md`, and `examples/NOTICE.md`, and a Korean documentation index in
+  `README.ko.md`
+- Bilingual (Korean/English) GitHub issue forms, pull request template, and CLI help,
+  including help text for every positional argument and option
+- A troubleshooting entry for garbled Korean output on Windows consoles
+
+### Fixed
+
+- `tools/export_schema.py` now always writes LF line endings, so regenerating the
+  schema on Windows no longer produces a CRLF-only diff, and the schema `$id` follows
+  the package version instead of a hard-coded tag
+
 ## [0.1.0] - 2026-08-21
 
 ### Added

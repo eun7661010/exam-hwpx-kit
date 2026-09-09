@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Private security report
+  - name: Private security report / 비공개 보안 신고
     url: https://github.com/eun7661010/exam-hwpx-kit/security/advisories/new
-    about: Report path escapes, privacy leaks, or crafted-file vulnerabilities privately.
+    about: Report path escapes, privacy leaks, or crafted-file vulnerabilities privately. / 경로 이탈, 개인정보 유출, 조작된 파일 취약점은 비공개로 신고해 주세요.
+  - name: Korean documentation / 한국어 문서
+    url: https://github.com/eun7661010/exam-hwpx-kit/blob/main/README.ko.md
+    about: README, contribution guide, schema, troubleshooting, and security docs in Korean. / README·기여 안내·스키마·문제 해결·보안 문서의 한국어판입니다.

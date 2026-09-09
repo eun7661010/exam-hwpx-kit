@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from exam_hwpx_kit import __version__
 from exam_hwpx_kit.models import ExamPaper
 
 
@@ -14,10 +15,15 @@ def main() -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     schema = ExamPaper.model_json_schema()
     schema["$id"] = (
-        "https://github.com/eun7661010/exam-hwpx-kit/blob/v0.1.0/src/exam_hwpx_kit/schemas/exam-paper.v1.schema.json"
+        "https://github.com/eun7661010/exam-hwpx-kit/blob/"
+        f"v{__version__}/src/exam_hwpx_kit/schemas/exam-paper.v1.schema.json"
     )
     schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
-    target.write_text(json.dumps(schema, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    target.write_text(
+        json.dumps(schema, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
     print(f"generated {target.relative_to(root)}")
 
 

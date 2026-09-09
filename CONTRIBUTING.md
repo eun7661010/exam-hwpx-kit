@@ -1,5 +1,7 @@
 # Contributing
 
+[한국어 안내](CONTRIBUTING.ko.md)
+
 Thank you for improving `exam-hwpx-kit`. Small fixes, new validation rules,
 cross-platform reports, documentation, and accessibility improvements are welcome.
 

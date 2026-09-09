@@ -1,5 +1,7 @@
 # Security and privacy model
 
+[한국어](security-model.ko.md)
+
 ## Protected boundaries
 
 - Asset paths must be relative to the JSON file.

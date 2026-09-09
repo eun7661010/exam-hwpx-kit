@@ -118,7 +118,7 @@ CLI를 실행하기 전에도 [합성 HWPX 결과](examples/synthetic-output.hwp
 - 문항 분리 방지 의도와 보수적인 렌더 전 오버플로 위험 한도
 
 필드의 자세한 내용은 [JSON Schema](src/exam_hwpx_kit/schemas/exam-paper.v1.schema.json)와
-[스키마 안내](docs/schema.md)에서 확인할 수 있습니다.
+[스키마 안내](docs/schema.ko.md)에서 확인할 수 있습니다.
 
 ## 명령어
 
@@ -159,7 +159,7 @@ Markdown 문항을 기존 양식에 조판하고, 렌더러를 이용해 문항 
 4. **한컴오피스에서 열림**은 사용자의 환경에서 직접 확인하지 않았다면 주장하지 않습니다.
 
 `python-hwpx`는 형식에 맞는 구조 검사를 제공하지만, 구조 검사가 화면의 픽셀까지
-보장하지는 않습니다. 자세한 절차는 [시각 회귀 검사](docs/visual-regression.md)를
+보장하지는 않습니다. 자세한 절차는 [시각 회귀 검사](docs/visual-regression.ko.md)를
 참고하세요.
 
 ## 개인정보와 보안
@@ -171,7 +171,7 @@ CLI는 LLM을 호출하거나 문서를 업로드하지 않으며 네트워크 �
 
 이 도구는 입력 자료의 저작권이나 공개 가능 여부를 판정하지 않습니다. 학생 기록,
 답안지, 인증 정보, 비공개 시험지, 권리가 불분명한 제3자 지문을 공개 저장소에 넣지
-마세요. [보안 범위](docs/security-model.md)와 [보안 정책](SECURITY.md)도 확인하세요.
+마세요. [보안 범위](docs/security-model.ko.md)와 [보안 정책](SECURITY.md)도 확인하세요.
 
 ## 개발과 기여
 
@@ -188,8 +188,21 @@ twine check dist/*
 ```
 
 CI는 Windows, macOS, Ubuntu의 Python 3.10과 3.13에서 테스트와 대표 예제를
-실행합니다. 합성 fixture 규칙과 PR 절차는 [CONTRIBUTING.md](CONTRIBUTING.md)에
-정리되어 있습니다.
+실행합니다. 합성 fixture 규칙과 PR 절차는 [기여 안내](CONTRIBUTING.ko.md)에
+정리되어 있습니다. 이슈와 PR은 한국어로 작성해도 됩니다.
+
+## 한국어 문서 안내
+
+- [기여 안내](CONTRIBUTING.ko.md) — PR 전 게이트, fixture 안전 규칙, 계약 변경 절차
+- [스키마 안내](docs/schema.ko.md) — 루트 필드, 지문·문항 블록, 자산 경로 규칙
+- [문제 해결](docs/troubleshooting.ko.md) — 자주 만나는 검증 코드와 Windows 콘솔 한글 깨짐
+- [시각 회귀 검사](docs/visual-regression.ko.md) — PNG 기준선 비교 절차
+- [보안·개인정보 모델](docs/security-model.ko.md) — 보호 경계와 위협 모델 밖의 것
+- [아키텍처](docs/architecture.ko.md) — 모델·렌더러·감사기의 역할 분리
+- [보안 정책](SECURITY.md#한국어-안내) · [행동 강령](CODE_OF_CONDUCT.md#한국어-안내)
+
+CLI 도움말(`exam-hwpx --help`)은 한국어와 영어를 함께 보여 주고, 검증·생성·감사
+메시지는 한국어로 출력합니다. GitHub 이슈·PR 템플릿도 두 언어를 함께 안내합니다.
 
 ## 하지 않는 일과 현재 한계
 
