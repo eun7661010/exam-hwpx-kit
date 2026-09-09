@@ -27,7 +27,7 @@ CLI: exam-hwpx
 ```text
 exam-hwpx validate INPUT [--json]
 exam-hwpx render INPUT OUTPUT [--receipt PATH] [--json]
-exam-hwpx audit INPUT OUTPUT [--json]
+exam-hwpx audit INPUT HWPX [--json]
 exam-hwpx template OUTPUT [--columns 1|2]
 exam-hwpx visual-check BASELINE_PNG_DIR CURRENT_PNG_DIR [--json]
 ```
@@ -43,6 +43,7 @@ generation, audit, or visual comparison failed.
 - Receipt version: exam-hwpx-kit/receipt/v1
 - Runtime dependencies: pydantic and python-hwpx
 - Optional visual dependency: Pillow
+- Korean documentation: README.ko.md, CONTRIBUTING.ko.md, docs/*.ko.md (issues and PRs may be written in Korean)
 
 ## Verification semantics
 

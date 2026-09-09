@@ -130,7 +130,7 @@ and [schema guide](docs/schema.md).
 |---|---|---:|
 | `exam-hwpx validate INPUT` | Validate schema, cross-references, paths, assets, and layout risk | `0` valid, `1` invalid |
 | `exam-hwpx render INPUT OUTPUT` | Validate, generate HWPX, audit it, and write a receipt without overwriting existing files | `0` success, `1` blocked |
-| `exam-hwpx audit INPUT OUTPUT` | Compare an existing HWPX with its source JSON | `0` match, `1` mismatch |
+| `exam-hwpx audit INPUT HWPX` | Compare an existing HWPX with its source JSON | `0` match, `1` mismatch |
 | `exam-hwpx template OUTPUT` | Create a content-free synthetic A4 HWPX starting point | `0` success |
 | `exam-hwpx visual-check BASELINE CURRENT` | Compare trusted renderer PNG pages | `0` within threshold, `1` regression |
 
@@ -192,7 +192,8 @@ twine check dist/*
 
 CI runs the test and example workflow on Windows, macOS, and Ubuntu with Python
 3.10 and 3.13. See [CONTRIBUTING.md](CONTRIBUTING.md) for safe fixture and pull
-request rules.
+request rules. Korean contributors can read [CONTRIBUTING.ko.md](CONTRIBUTING.ko.md)
+and the `docs/*.ko.md` pages; issues and pull requests may be written in Korean.
 
 ## Non-goals and current limits
 

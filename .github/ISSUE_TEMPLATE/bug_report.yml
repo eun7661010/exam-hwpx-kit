@@ -1,42 +1,46 @@
-name: Bug report
-description: Report a reproducible problem using synthetic data.
+name: Bug report / 버그 신고
+description: Report a reproducible problem using synthetic data. / 합성 데이터로 재현되는 문제를 신고합니다.
 title: "[Bug]: "
 labels: ["bug", "needs-triage"]
 body:
   - type: markdown
     attributes:
-      value: Do not attach real exams, student data, credentials, private paths, or proprietary templates.
+      value: |
+        Do not attach real exams, student data, credentials, private paths, or proprietary templates.
+        실제 시험지, 학생 정보, 인증 정보, 개인 경로, 비공개 템플릿은 첨부하지 마세요. 한국어로 작성해도 됩니다.
   - type: input
     id: version
     attributes:
-      label: Version
+      label: Version / 버전
       placeholder: 0.1.0
     validations:
       required: true
   - type: dropdown
     id: os
     attributes:
-      label: Operating system
+      label: Operating system / 운영체제
       options: [Windows, macOS, Linux]
     validations:
       required: true
   - type: textarea
     id: reproduction
     attributes:
-      label: Synthetic reproduction
-      description: Include minimal JSON, commands, exit codes, and output with private data removed.
+      label: Synthetic reproduction / 합성 재현 절차
+      description: |
+        Include minimal JSON, commands, exit codes, and output with private data removed.
+        최소한의 JSON, 실행한 명령, 종료 코드, 출력을 개인 정보를 지운 뒤 적어 주세요.
     validations:
       required: true
   - type: textarea
     id: expected
     attributes:
-      label: Expected behavior
+      label: Expected behavior / 기대한 동작
     validations:
       required: true
   - type: checkboxes
     id: safety
     attributes:
-      label: Fixture safety
+      label: Fixture safety / fixture 안전 확인
       options:
-        - label: I confirm that the report contains no personal data, credentials, private paths, or copyrighted exam content.
+        - label: I confirm that the report contains no personal data, credentials, private paths, or copyrighted exam content. / 이 신고에는 개인정보, 인증 정보, 개인 경로, 저작권이 있는 시험 콘텐츠가 없음을 확인합니다.
           required: true

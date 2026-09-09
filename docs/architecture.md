@@ -1,5 +1,7 @@
 # Architecture
 
+[한국어](architecture.ko.md)
+
 `exam-hwpx-kit` separates exam-domain decisions from HWPX format mechanics.
 
 ```text

@@ -50,7 +50,7 @@ class QuestionBlock(StrictModel):
     id: str = Field(pattern=r"^[a-z][a-z0-9_-]{1,63}$")
     number: PositiveInt
     stem: str = Field(min_length=1, max_length=4000)
-    choices: list[str] = Field(min_length=2, max_length=5)
+    choices: list[Annotated[str, Field(min_length=1)]] = Field(min_length=2, max_length=5)
     points: int | None = Field(default=None, ge=0, le=100)
     boxes: list[SupportBox] = Field(default_factory=list, max_length=4)
     image_ids: list[str] = Field(default_factory=list, max_length=4)

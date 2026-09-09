@@ -1,26 +1,36 @@
-name: Feature request
-description: Propose a focused exam-contract or integrity improvement.
+name: Feature request / 기능 제안
+description: Propose a focused exam-contract or integrity improvement. / 시험 계약이나 무결성 검사에 대한 구체적인 개선을 제안합니다.
 title: "[Feature]: "
 labels: ["enhancement", "needs-triage"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Please keep examples synthetic. 예시는 합성 데이터만 사용해 주세요. 한국어로 작성해도 됩니다.
   - type: textarea
     id: pain
     attributes:
-      label: User pain point
-      description: What exam-to-HWPX workflow currently fails or takes manual work?
+      label: User pain point / 불편한 점
+      description: |
+        What exam-to-HWPX workflow currently fails or takes manual work?
+        어떤 시험 JSON → HWPX 작업이 지금 실패하거나 손이 많이 가나요?
     validations:
       required: true
   - type: textarea
     id: contract
     attributes:
-      label: Proposed public contract
-      description: Show a small synthetic JSON or CLI example.
+      label: Proposed public contract / 제안하는 공개 계약
+      description: |
+        Show a small synthetic JSON or CLI example.
+        작은 합성 JSON이나 CLI 예시를 보여 주세요.
     validations:
       required: true
   - type: textarea
     id: boundary
     attributes:
-      label: Why this belongs here
-      description: Explain why the change is exam-specific rather than a general python-hwpx feature.
+      label: Why this belongs here / 이 저장소에 속하는 이유
+      description: |
+        Explain why the change is exam-specific rather than a general python-hwpx feature.
+        일반적인 python-hwpx 기능이 아니라 시험 문서에 특화된 변경인 이유를 설명해 주세요.
     validations:
       required: true

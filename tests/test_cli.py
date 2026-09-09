@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from exam_hwpx_kit.cli import _ensure_utf8_stream, run
 
 
@@ -50,3 +52,31 @@ def test_bad_input_returns_one(tmp_path: Path) -> None:
     source = tmp_path / "bad.json"
     source.write_text("{}", encoding="utf-8")
     assert run(["validate", str(source)]) == 1
+
+
+def test_help_is_bilingual(capsys) -> None:
+    with pytest.raises(SystemExit) as exc:
+        run(["--help"])
+    assert exc.value.code == 0
+    out = capsys.readouterr().out
+    assert "검증" in out
+    assert "validate" in out
+
+
+def test_subcommand_help_documents_every_option(capsys) -> None:
+    for command in ("validate", "render", "audit", "template", "visual-check"):
+        with pytest.raises(SystemExit):
+            run([command, "--help"])
+        out = capsys.readouterr().out
+        assert " / " in out, command
+
+
+def test_visual_check_reports_missing_extra_cleanly(monkeypatch, tmp_path: Path, capsys) -> None:
+    def boom(*args, **kwargs):
+        raise RuntimeError("visual-check에는 'exam-hwpx-kit[visual]' 설치가 필요합니다.")
+
+    monkeypatch.setattr("exam_hwpx_kit.cli.compare_page_directories", boom)
+    assert run(["visual-check", str(tmp_path), str(tmp_path)]) == 1
+    captured = capsys.readouterr()
+    assert "exam-hwpx-kit[visual]" in captured.err
+    assert "Traceback" not in captured.err
